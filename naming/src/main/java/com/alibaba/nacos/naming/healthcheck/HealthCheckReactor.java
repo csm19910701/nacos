@@ -51,6 +51,7 @@ public class HealthCheckReactor {
     }
 
     public static void scheduleCheck(ClientBeatCheckTask task) {
+        //带延迟时间的调度循环执行
         futureMap.putIfAbsent(task.taskKey(), EXECUTOR.scheduleWithFixedDelay(task, 5000, 5000, TimeUnit.MILLISECONDS));
     }
 

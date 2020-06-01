@@ -404,6 +404,7 @@ public class ServiceManager implements RecordListener<Service> {
     }
 
     public void createServiceIfAbsent(String namespaceId, String serviceName, boolean local, Cluster cluster) throws NacosException {
+        //根据服务名称获取service
         Service service = getService(namespaceId, serviceName);
         if (service == null) {
 
@@ -440,6 +441,7 @@ public class ServiceManager implements RecordListener<Service> {
      */
     public void registerInstance(String namespaceId, String serviceName, Instance instance) throws NacosException {
 
+        //创建或修改服务
         createEmptyService(namespaceId, serviceName, instance.isEphemeral());
 
         Service service = getService(namespaceId, serviceName);
@@ -618,7 +620,9 @@ public class ServiceManager implements RecordListener<Service> {
     }
 
     private void putServiceAndInit(Service service) throws NacosException {
+        //服务添加到map中
         putService(service);
+        //开启心跳任务
         service.init();
         consistencyService.listen(KeyBuilder.buildInstanceListKey(service.getNamespaceId(), service.getName(), true), service);
         consistencyService.listen(KeyBuilder.buildInstanceListKey(service.getNamespaceId(), service.getName(), false), service);

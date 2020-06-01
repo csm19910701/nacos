@@ -256,6 +256,7 @@ public class Service extends com.alibaba.nacos.api.naming.pojo.Service implement
 
     public void init() {
 
+        //检查这个客户端是否是监控状态
         HealthCheckReactor.scheduleCheck(clientBeatCheckTask);
 
         for (Map.Entry<String, Cluster> entry : clusterMap.entrySet()) {
